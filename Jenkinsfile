@@ -8,7 +8,6 @@ pipeline {
         stage('Setup') {
             steps {
                 sh '''
-                source /home/ubuntu/myenv/bin/activate
                 pip install -r requirements.txt
                 '''
             }

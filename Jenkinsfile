@@ -38,7 +38,7 @@ pipeline {
                     ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} << EOF
                         unzip -o /home/ubuntu/myapp.zip -d /home/ubuntu/app/
                         sudo apt update
-                        sudo apt install python3.12-venv -y
+                        sudo apt install zip python3.12-venv -y
                         python3 -m venv /home/ubuntu/app/myenv
                         source /home/ubuntu/app/myenv/bin/activate
                         cd /home/ubuntu/app/

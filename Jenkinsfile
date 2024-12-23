@@ -8,6 +8,8 @@ pipeline {
         stage('Setup') {
             steps {
                 sh '''
+                sudo apt update
+                sudo apt install python3.12-venv -y
                 python3 -m venv /home/ubuntu/myenv
                 source /home/ubuntu/myenv/bin/activate
                 pip install -r requirements.txt
@@ -22,6 +24,7 @@ pipeline {
 
         stage('Package code') {
             steps {
+                sh "sudo apt install zip -y"
                 sh "zip -r myapp.zip ./* -x '*.git*'"
                 sh "ls -lart"
             }
@@ -34,6 +37,8 @@ pipeline {
                     scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip  ${username}@${SERVER_IP}:/home/ubuntu/
                     ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} << EOF
                         unzip -o /home/ubuntu/myapp.zip -d /home/ubuntu/app/
+                        sudo apt update
+                        sudo apt install python3.12-venv -y
                         python3 -m venv /home/ubuntu/app/myenv
                         source /home/ubuntu/app/myenv/bin/activate
                         cd /home/ubuntu/app/

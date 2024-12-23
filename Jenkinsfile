@@ -32,7 +32,7 @@ pipeline {
                         unzip -o /home/ubuntu/myapp.zip -d /home/ubuntu/app/
                         source app/venv/bin/activate
                         cd /home/ubuntu/app/
-                        pip install -r requirements.txt
+                        pip install -r requirements.txt --break-system-packages
                         sudo systemctl restart flaskapp.service
 EOF
                     '''

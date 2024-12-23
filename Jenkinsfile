@@ -9,7 +9,7 @@ pipeline {
             steps {
                 sh '''
                 bash -c 'source myenv/bin/activate'
-                pip install -r requirements.txt
+                myenv/bin/pip install -r requirements.txt
                 '''
             }
         }

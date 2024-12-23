@@ -7,7 +7,11 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh "pip install -r requirements.txt"
+                sh '''
+                python3 -m venv /home/ubuntu/myenv
+                source /home/ubuntu/myenv/bin/activate
+                pip install -r requirements.txt
+                '''
             }
         }
         stage('Test') {

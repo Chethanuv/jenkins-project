@@ -27,11 +27,11 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'username')]) {
                     sh '''
-                    scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip  ${username}@${SERVER_IP}:/home/ec2-user/
+                    scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip  ${username}@${SERVER_IP}:/home/ubuntu/
                     ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} << EOF
-                        unzip -o /home/ec2-user/myapp.zip -d /home/ec2-user/app/
+                        unzip -o /home/ubuntu/myapp.zip -d /home/ubuntu/app/
                         source app/venv/bin/activate
-                        cd /home/ec2-user/app/
+                        cd /home/ubuntu/app/
                         pip install -r requirements.txt
                         sudo systemctl restart flaskapp.service
 EOF

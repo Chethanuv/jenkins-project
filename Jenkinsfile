@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh "pip install -r requirements.txt --break-system-packages"
+                sh "pip install -r requirements.txt"
             }
         }
         stage('Test') {
@@ -30,9 +30,10 @@ pipeline {
                     scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip  ${username}@${SERVER_IP}:/home/ubuntu/
                     ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} << EOF
                         unzip -o /home/ubuntu/myapp.zip -d /home/ubuntu/app/
-                        source app/venv/bin/activate
+                        python3 -m venv /home/ubuntu/app/myenv
+                        source /home/ubuntu/app/myenv/bin/activate
                         cd /home/ubuntu/app/
-                        pip install -r requirements.txt --break-system-packages
+                        pip install -r requirements.txt
                         sudo systemctl restart flaskapp.service
 EOF
                     '''

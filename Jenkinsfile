@@ -8,7 +8,6 @@ pipeline {
         stage('Setup') {
             steps {
                 sh '''
-                python3 -m venv myenv
                 source /home/ubuntu/myenv/bin/activate
                 pip install -r requirements.txt
                 '''
@@ -34,7 +33,6 @@ pipeline {
                     scp -i $MY_SSH_KEY -o StrictHostKeyChecking=no myapp.zip  ${username}@${SERVER_IP}:/home/ubuntu/
                     ssh -i $MY_SSH_KEY -o StrictHostKeyChecking=no ${username}@${SERVER_IP} << EOF
                         unzip -o /home/ubuntu/myapp.zip -d /home/ubuntu/app/
-                        python3 -m venv app/myenv
                         source /home/ubuntu/app/myenv/bin/activate
                         cd /home/ubuntu/app/
                         pip install -r requirements.txt

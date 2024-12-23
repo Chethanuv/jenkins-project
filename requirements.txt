@@ -1,5 +1,4 @@
-zip
-python3.12-venv
+zip==3.0
 blinker==1.7.0
 cachetools==5.3.2
 certifi==2023.11.17
